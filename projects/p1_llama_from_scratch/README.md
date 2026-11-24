@@ -49,3 +49,7 @@ cd projects/p1_llama_from_scratch
 python -m pip install torch transformers safetensors pytest
 pytest -q
 ```
+
+## Notes
+
+- The function skeletons and scaffolding were implemented with a Gemini 4 Neon (low) model, and the main functions were implemented by the user.

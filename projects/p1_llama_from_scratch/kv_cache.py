@@ -32,9 +32,18 @@ class KVCache:
         return cls(key=key, value=value)
 
     def append(self, key: Tensor, value: Tensor) -> tuple[Tensor, Tensor]:
-        # TODO: Preallocate already; copy new K/V into key/value and increase length.
-        # TODO: Return all valid K/V tensors up to the current length.
-        raise NotImplementedError("Implement KVCache.append")
+
+        new_token = key.shape[2]
+        start = self.length
+        end = start + new_token
+        if end > self.key.shape[2]:
+            raise ValueError("more Ks than we can hold")
+
+        self.key[:, :, start:end, :] = key
+        self.value[:, :, start:end, :] = value
+        self.length = end
+
+        return self.key[:, :, :self.length, :], self.value[:, :, :self.length, :]
 
     def reset(self) -> None:
         self.length = 0
