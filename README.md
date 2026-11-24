@@ -14,5 +14,10 @@ weekly progress.
 
 ## Week 1
 
-The first exercise is [GPU Puzzles](notebooks/W01/GPU_puzzlers.ipynb), covering
-NUMBA CUDA kernels and GPU memory patterns.
+The first exercises are:
+
+- [GPU Puzzles](notebooks/W01/GPU_puzzlers.ipynb), covering NUMBA CUDA kernels.
+- [P1 inference-from-scratch skeleton](projects/p1_llama_from_scratch/), where
+  you implement the transformer forward pass in PyTorch.
+- [Week 1 CUDA kernels](projects/week1_kernels/), with TODO blocks for vector
+  add, SAXPY, and elementwise GELU.
