@@ -12,6 +12,7 @@ class ModelConfig:
     head_dim: int = 128
     max_position_embeddings: int = 4096
     rms_norm_eps: float = 1e-6
+    use_qk_norm: bool = False
     rope_theta: float = 1000000.0
 
     def validate(self) -> None:

@@ -144,6 +144,8 @@ class LlamaStyleModel(nn.Module):
             ("self_attn.o_proj", "attention.output_projection"),
             ("mlp.gate_proj", "feed_forward.gate_projection"),
             ("mlp.up_proj", "feed_forward.up_projection"),
+            ("self_attn.q_norm", "attention.q_norm"),
+            ("self_attn.k_norm", "attention.k_norm"),
             ("mlp.down_proj", "feed_forward.down_projection"),
         )
 

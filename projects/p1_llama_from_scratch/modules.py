@@ -82,6 +82,8 @@ class FeedForward(nn.Module):
 class GroupedQueryAttention(nn.Module):
     def __init__(self, config: ModelConfig) -> None:
         super().__init__()
+        self.q_norm = RMSNorm(config.head_dim, config.rms_norm_eps) if config.use_qk_norm else None
+        self.k_norm = RMSNorm(config.head_dim, config.rms_norm_eps) if config.use_qk_norm else None
         self.num_attention_heads = config.num_attention_heads
         self.num_key_value_heads = config.num_key_value_heads
         self.head_dim = config.head_dim
@@ -118,6 +120,11 @@ class GroupedQueryAttention(nn.Module):
         Q = Q.view(Q.shape[0], Q.shape[1], self.num_attention_heads, self.head_dim).transpose(1, 2)
         K = K.view(K.shape[0], K.shape[1], self.num_key_value_heads, self.head_dim).transpose(1, 2)
         V = V.view(V.shape[0], V.shape[1], self.num_key_value_heads, self.head_dim).transpose(1, 2)
+
+        if self.q_norm is not None:
+            Q = self.q_norm(Q)
+        if self.k_norm is not None:
+            K = self.k_norm(K)
         
         # Apply RoPE.
         Q, K = rotary_embedding(Q, K, position_ids)
